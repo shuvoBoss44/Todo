@@ -19,12 +19,16 @@ const App = () => {
   const addTodo = todo =>
     setTodos(prev => [{ id: Date.now(), ...todo }, ...prev]);
 
-  const updateTodo = (id, updatedTodo) =>
-    setTodos(prev => prev.map(todo => (todo.id === id ? updatedTodo : todo)));
-
   const deleteTodo = id => {
     setTodos(prev => prev.filter(todo => todo.id !== id));
     setAllIds(prev => prev.filter(todoId => todoId !== id));
+  };
+  const updateTodo = (id, updatedTodo) => {
+    if (!updatedTodo || !updatedTodo.text?.trim()) {
+      deleteTodo(id);
+      return;
+    }
+    setTodos(prev => prev.map(todo => (todo.id === id ? updatedTodo : todo)));
   };
   const toggleTodo = id =>
     setTodos(prev =>
