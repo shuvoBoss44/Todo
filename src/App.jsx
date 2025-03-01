@@ -20,15 +20,22 @@ const App = () => {
     setTodos(prev => [{ id: Date.now(), ...todo }, ...prev]);
 
   const deleteTodo = id => {
-    setTodos(prev => prev.filter(todo => todo.id !== id));
+    setTodos(prev => {
+      const updatedTodos = prev.filter(todo => todo.id !== id);
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      return updatedTodos;
+    });
     setAllIds(prev => prev.filter(todoId => todoId !== id));
   };
   const updateTodo = (id, updatedTodo) => {
-    if (!updatedTodo || !updatedTodo.text?.trim()) {
+    if (!updatedTodo || updatedTodo.title === "") {
       deleteTodo(id);
       return;
+    } else {
+      setTodos(prev =>
+        prev.map(todo => (todo.id === id ? { ...todo, ...updatedTodo } : todo))
+      );
     }
-    setTodos(prev => prev.map(todo => (todo.id === id ? updatedTodo : todo)));
   };
   const toggleTodo = id =>
     setTodos(prev =>
@@ -38,7 +45,11 @@ const App = () => {
     );
 
   const deleteAll = () => {
-    setTodos(prev => prev.filter(todo => !allIds.includes(todo.id)));
+    setTodos(prev => {
+      const filteredTodos = prev.filter(todo => !allIds.includes(todo.id));
+      localStorage.setItem("todos", JSON.stringify(filteredTodos));
+      return filteredTodos;
+    });
     setAllIds([]);
   };
 
@@ -72,7 +83,12 @@ const App = () => {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                 {todos.map(todo => (
-                  <FormItems key={todo.id} todo={todo} />
+                  <div
+                    key={todo.id}
+                    className="opacity-100 transition-opacity duration-300"
+                  >
+                    <FormItems todo={todo} />
+                  </div>
                 ))}
               </div>
 
