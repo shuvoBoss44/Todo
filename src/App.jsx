@@ -22,9 +22,10 @@ const App = () => {
   const updateTodo = (id, updatedTodo) =>
     setTodos(prev => prev.map(todo => (todo.id === id ? updatedTodo : todo)));
 
-  const deleteTodo = id =>
+  const deleteTodo = id => {
     setTodos(prev => prev.filter(todo => todo.id !== id));
-
+    setAllIds(prev => prev.filter(todoId => todoId !== id));
+  };
   const toggleTodo = id =>
     setTodos(prev =>
       prev.map(todo =>
@@ -79,7 +80,7 @@ const App = () => {
                              text-white shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center gap-2"
                   >
                     <Trash2 size={18} className="stroke-[2.5]" />
-                    Clear Selected
+                    Clear Selected ({allIds.length})
                   </button>
                 </div>
               )}
