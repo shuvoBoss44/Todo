@@ -25,17 +25,13 @@ const App = () => {
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
       return updatedTodos;
     });
+
     setAllIds(prev => prev.filter(todoId => todoId !== id));
   };
   const updateTodo = (id, updatedTodo) => {
-    if (!updatedTodo || updatedTodo.title === "") {
-      deleteTodo(id);
-      return;
-    } else {
-      setTodos(prev =>
-        prev.map(todo => (todo.id === id ? { ...todo, ...updatedTodo } : todo))
-      );
-    }
+    setTodos(prev =>
+      prev.map(todo => (todo.id === id ? { ...todo, ...updatedTodo } : todo))
+    );
   };
   const toggleTodo = id =>
     setTodos(prev =>
