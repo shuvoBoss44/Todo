@@ -8,7 +8,7 @@ const FormItems = ({ todo }) => {
   const { updateTodo, deleteTodo, toggleTodo, allIds } = useTodo();
 
   const editTodo = () => {
-    updateTodo(todo.id, { ...todo, todoMsg });
+    updateTodo(todo.id, { ...todo, todoMsg: todoMsg });
     setIsTodoEditable(false);
   };
 
