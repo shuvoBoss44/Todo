@@ -79,7 +79,7 @@ const App = () => {
                              text-white shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center gap-2"
                   >
                     <Trash2 size={18} className="stroke-[2.5]" />
-                    Clear Selected ({allIds.length})
+                    Clear Selected
                   </button>
                 </div>
               )}
